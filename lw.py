@@ -76,7 +76,7 @@ cipher.encrypt(pad(data, AES.block_size))'''
     # timeit.repeat statement 
     times = timeit.repeat(setup = SETUP_CODE, 
                           stmt = TEST_CODE, 
-                          repeat = 100, 
+                          repeat = 10, 
                           number = 1, 
                           globals=globals()) 
   
@@ -101,7 +101,7 @@ unpad(cipher.decrypt(cipher_text), AES.block_size)'''
     # timeit.repeat statement 
     times = timeit.repeat(setup = SETUP_CODE, 
                           stmt = TEST_CODE, 
-                          repeat = 100, 
+                          repeat = 10, 
                           number = 1, 
                           globals=globals()) 
   
@@ -160,7 +160,7 @@ x.encrypt(data)'''
     # timeit.repeat statement 
     times = timeit.repeat(setup = SETUP_CODE, 
                           stmt = TEST_CODE, 
-                          repeat = 100, 
+                          repeat = 10, 
                           number = 1, 
                           globals=globals()) 
   
@@ -180,7 +180,7 @@ x.decrypt(cipher_text)'''
     # timeit.repeat statement 
     times = timeit.repeat(setup = SETUP_CODE, 
                           stmt = TEST_CODE, 
-                          repeat = 100, 
+                          repeat = 10, 
                           number = 1, 
                           globals=globals()) 
   
@@ -231,7 +231,7 @@ s.encrypt(plaintext)'''
     # timeit.repeat statement 
     times = timeit.repeat(setup = SETUP_CODE, 
                           stmt = TEST_CODE, 
-                          repeat = 100, 
+                          repeat = 10, 
                           number = 1, 
                           globals=globals()) 
   
@@ -255,7 +255,7 @@ s2.decrypt(ciphertext)'''
     # timeit.repeat statement 
     times = timeit.repeat(setup = SETUP_CODE, 
                           stmt = TEST_CODE, 
-                          repeat = 100, 
+                          repeat = 10, 
                           number = 1, 
                           globals=globals()) 
   
@@ -266,25 +266,29 @@ s2.decrypt(ciphertext)'''
 
 if __name__ == "__main__": 
 
-    # Input
-    data = get_random_bytes(1024)
-    #data = b"Where is a United states Flag that is never raised or lowered, flies 24 hours a day, seven days a week, yet it is never saluted?" # 128 bytes * 8 = 1024 bits 
-    key = get_random_bytes(16) # 16 bytes * 8 = 128 bits (1 byte = 8 bits)
-    iv = get_random_bytes(16) # It is as long as the block size
 
-    print("Plainttext size in bytes = ", len(data))
+    pBytes = [16, 1024, 102400, 1048576, 10485760]
 
-    print("\nBenchmark Tests for AES_128_128")
-    aes_128_128(data, key, iv) # produces memory usage values. 
-    aes_encrypt_time(data, key, iv)
-    aes_decrypt_time(data, key, iv)
-    
-    print("\nBenchmark Tests for XTEA_64_128")
-    xtea_64_128(data, key, iv[:8]) # produces memory usage values. 
-    XTEA_encrypt_time(data, key, iv)
-    XTEA_decrypt_time(data, key, iv)
+    for i in pBytes:
+        # Input
+        data = get_random_bytes(i)
+        #data = b"Where is a United states Flag that is never raised or lowered, flies 24 hours a day, seven days a week, yet it is never saluted?" # 128 bytes * 8 = 1024 bits 
+        key = get_random_bytes(16) # 16 bytes * 8 = 128 bits (1 byte = 8 bits)
+        iv = get_random_bytes(16) # It is as long as the block size
 
-    print("\nBenchmark Tests for SPECK_128_128")
-    SPECK_128_128(list(data), key, iv) # Produces memory usage values
-    SPECK_encrypt_time(data, key, iv)
-    SPECK_decrypt_time(data, key, iv)
+        print("\nPlainttext size in bytes = ", len(data))
+
+        print("\nBenchmark Tests for AES_128_128")
+        aes_128_128(data, key, iv) # produces memory usage values. 
+        aes_encrypt_time(data, key, iv)
+        aes_decrypt_time(data, key, iv)
+        
+        print("\nBenchmark Tests for XTEA_64_128")
+        xtea_64_128(data, key, iv[:8]) # produces memory usage values. 
+        XTEA_encrypt_time(data, key, iv)
+        XTEA_decrypt_time(data, key, iv)
+
+        print("\nBenchmark Tests for SPECK_128_128")
+        SPECK_128_128(list(data), key, iv) # Produces memory usage values
+        SPECK_encrypt_time(data, key, iv)
+        SPECK_decrypt_time(data, key, iv)
