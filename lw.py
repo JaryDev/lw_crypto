@@ -185,7 +185,7 @@ x.decrypt(cipher_text)'''
                           globals=globals()) 
   
     # priniting minimum exec. time 
-    print('XTEA_Encryption Time: {}'.format(min(times)))        
+    print('XTEA_Decryption Time: {}'.format(min(times)))        
 
 
 
@@ -219,7 +219,7 @@ def speck_decrypt(cipher, plaintext):
 
 
 
-# compute XTEA encryption time 
+# compute SPECK encryption time 
 def SPECK_encrypt_time(data, key, iv): 
     SETUP_CODE = ''' 
 s = speck.Python_SPECK(key, iv)
@@ -239,7 +239,7 @@ s.encrypt(plaintext)'''
     print('SPECK_Encryption Time: {}'.format(min(times)))        
 
 
-# compute XTEA decryption time 
+# compute SPECK decryption time 
 def SPECK_decrypt_time(data, key, iv): 
     SETUP_CODE = ''' 
 s = speck.Python_SPECK(key, iv)
